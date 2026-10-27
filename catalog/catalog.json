@@ -1,0 +1,172 @@
+[
+ {
+  "id": "w01",
+  "name": "Soft wave, chestnut with caramel",
+  "curl": "2a to 2b",
+  "length": "above chest",
+  "image": "catalog/w01.jpg",
+  "colour": {
+   "hex": "#644734",
+   "lab": [
+    32.76,
+    10.13,
+    16.08
+   ],
+   "highlight": "#7f5f49",
+   "samples": 2400
+  }
+ },
+ {
+  "id": "w02",
+  "name": "Long straight, espresso",
+  "curl": "1 to 2a",
+  "length": "long hair",
+  "image": "catalog/w02.jpg",
+  "colour": {
+   "hex": "#362722",
+   "lab": [
+    17.23,
+    6.51,
+    5.72
+   ],
+   "highlight": "#4f3f3b",
+   "samples": 2400
+  }
+ },
+ {
+  "id": "w03",
+  "name": "Side-part bob, honey blonde",
+  "curl": "1 to 2a",
+  "length": "short hair",
+  "image": "catalog/w03.jpg",
+  "colour": {
+   "hex": "#cfa97f",
+   "lab": [
+    71.73,
+    7.81,
+    26.99
+   ],
+   "highlight": "#dcba90",
+   "samples": 2400
+  }
+ },
+ {
+  "id": "w04",
+  "name": "Layered pixie, salt and pepper",
+  "curl": "1 to 2a",
+  "length": "ear length",
+  "image": "catalog/w04.jpg",
+  "colour": {
+   "hex": "#979092",
+   "lab": [
+    60.4,
+    2.82,
+    -0.01
+   ],
+   "highlight": "#b8b3b5",
+   "samples": 2400
+  }
+ },
+ {
+  "id": "w05",
+  "name": "Bouncy curls, black",
+  "curl": "3b to 3c",
+  "length": "above chest",
+  "image": "catalog/w05.jpg",
+  "colour": {
+   "hex": "#151316",
+   "lab": [
+    6.15,
+    1.43,
+    -1.81
+   ],
+   "highlight": "#232227",
+   "samples": 2400
+  }
+ },
+ {
+  "id": "w06",
+  "name": "Straight with bangs, auburn",
+  "curl": "1 to 2a",
+  "length": "above chest",
+  "image": "catalog/w06.jpg",
+  "colour": {
+   "hex": "#633322",
+   "lab": [
+    27.13,
+    19.99,
+    19.94
+   ],
+   "highlight": "#834c34",
+   "samples": 2400
+  }
+ },
+ {
+  "id": "w07",
+  "name": "Long loose wave, ash blonde",
+  "curl": "2a to 2b",
+  "length": "long hair",
+  "image": "catalog/w07.jpg",
+  "colour": {
+   "hex": "#b1a39b",
+   "lab": [
+    67.95,
+    3.38,
+    6.21
+   ],
+   "highlight": "#c2b5ac",
+   "samples": 2400
+  }
+ },
+ {
+  "id": "w08",
+  "name": "Layered gentle wave, light brown",
+  "curl": "2a to 2b",
+  "length": "above chest",
+  "image": "catalog/w08.jpg",
+  "colour": {
+   "hex": "#775745",
+   "lab": [
+    39.93,
+    10.23,
+    15.87
+   ],
+   "highlight": "#8f6e59",
+   "samples": 2400
+  }
+ },
+ {
+  "id": "w09",
+  "name": "Sleek bob with bangs, dark brown",
+  "curl": "1 to 2a",
+  "length": "ear length",
+  "image": "catalog/w09.jpg",
+  "colour": {
+   "hex": "#372927",
+   "lab": [
+    18.18,
+    6.07,
+    4.13
+   ],
+   "highlight": "#483833",
+   "samples": 2400
+  }
+ },
+ {
+  "id": "w10",
+  "name": "Soft-wave bob, silver",
+  "curl": "2a to 2b",
+  "length": "short hair",
+  "image": "catalog/w10.jpg",
+  "colour": {
+   "hex": "#c6c3c7",
+   "lab": [
+    79.25,
+    1.45,
+    -1.42
+   ],
+   "highlight": "#d2d0d3",
+   "samples": 2400
+  }
+ }
+]

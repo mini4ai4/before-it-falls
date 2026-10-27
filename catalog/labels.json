@@ -1,0 +1,12 @@
+[
+ {"id": "w01", "name": "Soft wave, chestnut with caramel", "curl": "2a to 2b", "length": "above chest"},
+ {"id": "w02", "name": "Long straight, espresso", "curl": "1 to 2a", "length": "long hair"},
+ {"id": "w03", "name": "Side-part bob, honey blonde", "curl": "1 to 2a", "length": "short hair"},
+ {"id": "w04", "name": "Layered pixie, salt and pepper", "curl": "1 to 2a", "length": "ear length"},
+ {"id": "w05", "name": "Bouncy curls, black", "curl": "3b to 3c", "length": "above chest"},
+ {"id": "w06", "name": "Straight with bangs, auburn", "curl": "1 to 2a", "length": "above chest"},
+ {"id": "w07", "name": "Long loose wave, ash blonde", "curl": "2a to 2b", "length": "long hair"},
+ {"id": "w08", "name": "Layered gentle wave, light brown", "curl": "2a to 2b", "length": "above chest"},
+ {"id": "w09", "name": "Sleek bob with bangs, dark brown", "curl": "1 to 2a", "length": "ear length"},
+ {"id": "w10", "name": "Soft-wave bob, silver", "curl": "2a to 2b", "length": "short hair"}
+]
