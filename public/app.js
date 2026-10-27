@@ -113,7 +113,7 @@ function tap() {
   state.taps = [];
   screen("Step 2 of 4", `
     <h1>Show us your colour.</h1>
-    <p class="lede voice">Tap two or three places on your hair: the lengths, not the roots.</p>
+    <p class="lede voice">Tap three or four places on your hair, spread across the lengths: not the roots, not the shine.</p>
     <div class="photo" id="tapzone"><canvas id="c" width="768" height="1024"></canvas><span class="badge" id="count">0 taps</span></div>
     <div class="actions">
       <button id="read" disabled>Read my hair</button>
@@ -271,6 +271,9 @@ function tryOn() {
       <div class="today"><div class="tag" style="padding:26px 8px 10px"><span class="thread"></span><div class="photo"><img src="${state.photos.front.url}" alt="Today"></div><div class="label">Today</div></div></div>
       <div class="wigs">${ranked.map(({ wig, match }) => wigTag(wig, match)).join("")}</div>
     </div>
+    <details class="notice" style="margin-top:18px"><summary>How the score works</summary>
+      <p>Every number is worked out the same way, with no opinions from a model. <b>Colour counts 60%</b>: the CIEDE2000 difference between your measured colour and the wig's (2 or less looks the same at arm's length). <b>Wave counts 25%</b>: how far apart the curl types are. <b>Length counts 15%</b>: a longer wig costs half as much as a shorter one, because a fitter can trim a wig but can't make it longer. The try-on photo is YouCam's hair transfer on your own face.</p>
+    </details>
     <div class="actions">
       <button id="share">${state.kept.length ? `Share my ${state.kept.length} favourite${state.kept.length > 1 ? "s" : ""} with my fitter` : "Share my tag with my fitter"}</button>
       <button id="back" class="outline">Back to my tag</button>
@@ -342,6 +345,11 @@ function share() {
     <h1>For your wig fitter.</h1>
     <p class="lede">Your fitter sees your tag and your favourites. Your photos stay on this phone: the link carries only the measurements and your note.</p>
     ${passportTag(state.passport)}
+    ${state.kept.length ? `<h2>The wigs I liked</h2><div class="catalog">${state.kept.map((id) => {
+      const wig = state.catalog.find((w) => w.id === id);
+      const m = rankWigs(state.passport, [wig])[0].match;
+      return `<figure style="cursor:default"><img src="${state.tryons[id] || "/" + wig.image}" alt="${esc(wig.name)} tried on"><figcaption>${esc(wig.name)}<br><b>${m.total}</b> · ${esc(m.verdict.toLowerCase())}</figcaption></figure>`;
+    }).join("")}</div><p class="source">These try-on photos stay on this phone and in your printout. The link only carries the measurements.</p>` : ""}
     <div class="actions">
       <button id="copy">Copy the link for my fitter</button>
       <a class="button outline" href="${link}" target="_blank" rel="noopener">See what my fitter will see</a>
