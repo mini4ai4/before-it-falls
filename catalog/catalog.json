@@ -1,6 +1,7 @@
 [
  {
   "id": "w01",
+  "group": "close",
   "name": "Soft wave, chestnut with caramel",
   "curl": "2a to 2b",
   "length": "above chest",
@@ -17,24 +18,134 @@
   }
  },
  {
-  "id": "w02",
-  "name": "Long straight, espresso",
-  "curl": "1 to 2a",
-  "length": "long hair",
-  "image": "catalog/w02.jpg",
+  "id": "w08",
+  "group": "close",
+  "name": "Layered wave, light brown",
+  "curl": "2a to 2b",
+  "length": "above chest",
+  "image": "catalog/w08.jpg",
   "colour": {
-   "hex": "#362722",
+   "hex": "#775745",
    "lab": [
-    17.23,
-    6.51,
-    5.72
+    39.93,
+    10.23,
+    15.87
    ],
-   "highlight": "#4f3f3b",
+   "highlight": "#8f6e59",
+   "samples": 2400
+  }
+ },
+ {
+  "id": "w11",
+  "group": "close",
+  "name": "Soft wave, cool ash brown",
+  "curl": "2a to 2b",
+  "length": "above chest",
+  "image": "catalog/w11.jpg",
+  "colour": {
+   "hex": "#645655",
+   "lab": [
+    38.01,
+    5.46,
+    2.66
+   ],
+   "highlight": "#827473",
+   "samples": 2400
+  }
+ },
+ {
+  "id": "w12",
+  "group": "close",
+  "name": "Soft wave, golden chestnut",
+  "curl": "2a to 2b",
+  "length": "above chest",
+  "image": "catalog/w12.jpg",
+  "colour": {
+   "hex": "#765133",
+   "lab": [
+    37.76,
+    11.76,
+    23.48
+   ],
+   "highlight": "#96714e",
+   "samples": 2400
+  }
+ },
+ {
+  "id": "w13",
+  "group": "close",
+  "name": "Soft wave, deep mocha",
+  "curl": "2a to 2b",
+  "length": "above chest",
+  "image": "catalog/w13.jpg",
+  "colour": {
+   "hex": "#322422",
+   "lab": [
+    15.82,
+    6.59,
+    3.91
+   ],
+   "highlight": "#473531",
+   "samples": 2400
+  }
+ },
+ {
+  "id": "w14",
+  "group": "close",
+  "name": "Soft wave, light caramel",
+  "curl": "2a to 2b",
+  "length": "above chest",
+  "image": "catalog/w14.jpg",
+  "colour": {
+   "hex": "#987058",
+   "lab": [
+    50.59,
+    12.97,
+    19.61
+   ],
+   "highlight": "#b38b70",
+   "samples": 2400
+  }
+ },
+ {
+  "id": "w15",
+  "group": "close",
+  "name": "Soft wave, brown to caramel balayage",
+  "curl": "2a to 2b",
+  "length": "above chest",
+  "image": "catalog/w15.jpg",
+  "colour": {
+   "hex": "#724b32",
+   "lab": [
+    35.86,
+    13.5,
+    21.65
+   ],
+   "highlight": "#8c6245",
+   "samples": 2400
+  }
+ },
+ {
+  "id": "w16",
+  "group": "close",
+  "name": "Soft wave, brown with silver blend",
+  "curl": "2a to 2b",
+  "length": "above chest",
+  "image": "catalog/w16.jpg",
+  "colour": {
+   "hex": "#675c5c",
+   "lab": [
+    39.96,
+    4.39,
+    1.67
+   ],
+   "highlight": "#877d7e",
    "samples": 2400
   }
  },
  {
   "id": "w03",
+  "group": "new",
   "name": "Side-part bob, honey blonde",
   "curl": "1 to 2a",
   "length": "short hair",
@@ -51,24 +162,8 @@
   }
  },
  {
-  "id": "w04",
-  "name": "Layered pixie, salt and pepper",
-  "curl": "1 to 2a",
-  "length": "ear length",
-  "image": "catalog/w04.jpg",
-  "colour": {
-   "hex": "#979092",
-   "lab": [
-    60.4,
-    2.82,
-    -0.01
-   ],
-   "highlight": "#b8b3b5",
-   "samples": 2400
-  }
- },
- {
   "id": "w05",
+  "group": "new",
   "name": "Bouncy curls, black",
   "curl": "3b to 3c",
   "length": "above chest",
@@ -86,6 +181,7 @@
  },
  {
   "id": "w06",
+  "group": "new",
   "name": "Straight with bangs, auburn",
   "curl": "1 to 2a",
   "length": "above chest",
@@ -102,58 +198,8 @@
   }
  },
  {
-  "id": "w07",
-  "name": "Long loose wave, ash blonde",
-  "curl": "2a to 2b",
-  "length": "long hair",
-  "image": "catalog/w07.jpg",
-  "colour": {
-   "hex": "#b1a39b",
-   "lab": [
-    67.95,
-    3.38,
-    6.21
-   ],
-   "highlight": "#c2b5ac",
-   "samples": 2400
-  }
- },
- {
-  "id": "w08",
-  "name": "Layered gentle wave, light brown",
-  "curl": "2a to 2b",
-  "length": "above chest",
-  "image": "catalog/w08.jpg",
-  "colour": {
-   "hex": "#775745",
-   "lab": [
-    39.93,
-    10.23,
-    15.87
-   ],
-   "highlight": "#8f6e59",
-   "samples": 2400
-  }
- },
- {
-  "id": "w09",
-  "name": "Sleek bob with bangs, dark brown",
-  "curl": "1 to 2a",
-  "length": "ear length",
-  "image": "catalog/w09.jpg",
-  "colour": {
-   "hex": "#372927",
-   "lab": [
-    18.18,
-    6.07,
-    4.13
-   ],
-   "highlight": "#483833",
-   "samples": 2400
-  }
- },
- {
   "id": "w10",
+  "group": "new",
   "name": "Soft-wave bob, silver",
   "curl": "2a to 2b",
   "length": "short hair",
