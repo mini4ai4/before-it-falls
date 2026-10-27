@@ -2,5 +2,10 @@
   "name": "before-it-falls",
   "private": true,
   "type": "module",
-  "scripts": { "test": "node --test" }
+  "scripts": {
+    "test": "node --test"
+  },
+  "devDependencies": {
+    "esbuild": "^0.24.0"
+  }
 }
