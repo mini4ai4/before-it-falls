@@ -12,7 +12,23 @@ from pathlib import Path
 
 APP = Path(__file__).resolve().parent.parent
 SITE = "before-it-falls"
-TOKEN = re.search(r"TOKEN = '([^']+)'", Path("/Users/mini/agents/sora/scripts/netlify_deploy.py").read_text()).group(1)
+LOCAL = APP / ".deploy.env"  # git-ignored: optional SECRET_VAULT_CMD=... for a local secret store
+for line in (LOCAL.read_text().splitlines() if LOCAL.exists() else []):
+    if "=" in line and not line.startswith("#"):
+        os.environ.setdefault(*line.split("=", 1))
+VAULT = os.environ.get("SECRET_VAULT_CMD", "")
+
+
+def secret(env_name, label):
+    """Environment first (anyone can deploy their own copy); our local vault as a fallback."""
+    if os.environ.get(env_name):
+        return os.environ[env_name]
+    if not VAULT:
+        raise SystemExit(f"Set {env_name} in the environment")
+    return subprocess.run([*VAULT.split(), label], capture_output=True, text=True).stdout.strip()
+
+
+TOKEN = secret("NETLIFY_TOKEN", "S47")
 
 
 def api(path, method="GET", data=None, raw=None, ctype="application/json"):
@@ -61,9 +77,9 @@ def static_files():
 
 
 def set_env(site):
-    key = subprocess.run(["python3", "/Users/mini/agents/sora/scripts/secret.py", "S45"], capture_output=True, text=True).stdout.strip()
+    key = secret("YOUCAM_API_KEY", "S45")
     if not key.startswith("sk-"):
-        raise SystemExit("Could not read the YouCam key from the vault (S45)")
+        raise SystemExit("Set YOUCAM_API_KEY (or have it in the local vault)")
     acct = site["account_id"]
     existing = api(f"/accounts/{acct}/env?site_id={site['id']}")
     if any(e.get("key") == "YOUCAM_API_KEY" for e in existing):
