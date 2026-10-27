@@ -77,8 +77,10 @@ const SHOTS = [
 ];
 
 function capture() {
-  const chips = SHOTS.map(([k, label]) => `<span class="chip ${state.photos[k] ? "done" : ""}">${label}${state.photos[k] ? " ✓" : ""}</span>`).join("");
-  const next = SHOTS.find(([k]) => k !== "top" && !state.photos[k]) || (!state.photos.top ? SHOTS[3] : null);
+  // The current shot is the one the person picked (to redo it), else the next missing one.
+  const chosen = SHOTS.find(([k]) => k === state.activeShot);
+  const next = chosen || SHOTS.find(([k]) => k !== "top" && !state.photos[k]) || (!state.photos.top ? SHOTS[3] : null);
+  const chips = SHOTS.map(([k, label]) => `<button class="chip ${next && next[0] === k ? "on" : state.photos[k] ? "done" : ""}" data-shot="${k}" style="width:auto;min-height:0">${label}${state.photos[k] ? " ✓" : ""}</button>`).join("");
   const ready = ["front", "left", "right"].every((k) => state.photos[k]);
   screen("Step 1 of 4", `
     <h1>Record your hair today.</h1>
@@ -96,7 +98,7 @@ function capture() {
           </label>
         </div>
       </div>` : ""}
-    <div class="catalog" style="margin-top:16px">${SHOTS.filter(([k]) => state.photos[k]).map(([k, label]) => `<figure><img src="${state.photos[k].url}" alt="${esc(label)}"><figcaption>${esc(label)}</figcaption></figure>`).join("")}</div>
+    <div class="catalog" style="margin-top:16px">${SHOTS.filter(([k]) => state.photos[k]).map(([k, label]) => `<figure style="cursor:default"><img src="${state.photos[k].url}" alt="${esc(label)}"><figcaption style="display:flex;justify-content:space-between;align-items:center;gap:4px">${esc(label)}<button class="chip" data-retake="${k}" style="width:auto;min-height:0;padding:3px 8px">Retake</button></figcaption></figure>`).join("")}</div>
     <div class="actions">
       ${ready ? `<button id="next">Next: show us your colour</button>` : ""}
       <button id="back" class="outline">Back</button>
@@ -107,10 +109,15 @@ function capture() {
       const file = input.files[0];
       if (!file) return;
       state.photos[next[0]] = await normalise(file);
+      state.activeShot = null;
       capture();
     };
   });
-  document.getElementById("next")?.addEventListener("click", tap);
+  app.querySelectorAll("[data-shot]").forEach((b) => { b.onclick = () => { state.activeShot = b.dataset.shot; capture(); }; });
+  app.querySelectorAll("[data-retake]").forEach((b) => {
+    b.onclick = () => { delete state.photos[b.dataset.retake]; state.fileIds = null; state.activeShot = b.dataset.retake; capture(); };
+  });
+  document.getElementById("next")?.addEventListener("click", () => { state.activeShot = null; tap(); });
   document.getElementById("back").onclick = welcome;
 }
 
