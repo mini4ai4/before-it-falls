@@ -1,0 +1,218 @@
+[
+ {
+  "id": "w01",
+  "group": "close",
+  "name": "Soft wave, chestnut with caramel",
+  "curl": "2a to 2b",
+  "length": "above chest",
+  "image": "catalog/w01.jpg",
+  "colour": {
+   "hex": "#644734",
+   "lab": [
+    32.76,
+    10.13,
+    16.08
+   ],
+   "highlight": "#7f5f49",
+   "samples": 2400
+  }
+ },
+ {
+  "id": "w08",
+  "group": "close",
+  "name": "Layered wave, light brown",
+  "curl": "2a to 2b",
+  "length": "above chest",
+  "image": "catalog/w08.jpg",
+  "colour": {
+   "hex": "#775745",
+   "lab": [
+    39.93,
+    10.23,
+    15.87
+   ],
+   "highlight": "#8f6e59",
+   "samples": 2400
+  }
+ },
+ {
+  "id": "w11",
+  "group": "close",
+  "name": "Soft wave, cool ash brown",
+  "curl": "2a to 2b",
+  "length": "above chest",
+  "image": "catalog/w11.jpg",
+  "colour": {
+   "hex": "#645655",
+   "lab": [
+    38.01,
+    5.46,
+    2.66
+   ],
+   "highlight": "#827473",
+   "samples": 2400
+  }
+ },
+ {
+  "id": "w12",
+  "group": "close",
+  "name": "Soft wave, golden chestnut",
+  "curl": "2a to 2b",
+  "length": "above chest",
+  "image": "catalog/w12.jpg",
+  "colour": {
+   "hex": "#765133",
+   "lab": [
+    37.76,
+    11.76,
+    23.48
+   ],
+   "highlight": "#96714e",
+   "samples": 2400
+  }
+ },
+ {
+  "id": "w13",
+  "group": "close",
+  "name": "Soft wave, deep mocha",
+  "curl": "2a to 2b",
+  "length": "above chest",
+  "image": "catalog/w13.jpg",
+  "colour": {
+   "hex": "#322422",
+   "lab": [
+    15.82,
+    6.59,
+    3.91
+   ],
+   "highlight": "#473531",
+   "samples": 2400
+  }
+ },
+ {
+  "id": "w14",
+  "group": "close",
+  "name": "Soft wave, light caramel",
+  "curl": "2a to 2b",
+  "length": "above chest",
+  "image": "catalog/w14.jpg",
+  "colour": {
+   "hex": "#987058",
+   "lab": [
+    50.59,
+    12.97,
+    19.61
+   ],
+   "highlight": "#b38b70",
+   "samples": 2400
+  }
+ },
+ {
+  "id": "w15",
+  "group": "close",
+  "name": "Soft wave, brown to caramel balayage",
+  "curl": "2a to 2b",
+  "length": "above chest",
+  "image": "catalog/w15.jpg",
+  "colour": {
+   "hex": "#724b32",
+   "lab": [
+    35.86,
+    13.5,
+    21.65
+   ],
+   "highlight": "#8c6245",
+   "samples": 2400
+  }
+ },
+ {
+  "id": "w16",
+  "group": "close",
+  "name": "Soft wave, brown with silver blend",
+  "curl": "2a to 2b",
+  "length": "above chest",
+  "image": "catalog/w16.jpg",
+  "colour": {
+   "hex": "#675c5c",
+   "lab": [
+    39.96,
+    4.39,
+    1.67
+   ],
+   "highlight": "#877d7e",
+   "samples": 2400
+  }
+ },
+ {
+  "id": "w03",
+  "group": "new",
+  "name": "Side-part bob, honey blonde",
+  "curl": "1 to 2a",
+  "length": "short hair",
+  "image": "catalog/w03.jpg",
+  "colour": {
+   "hex": "#cfa97f",
+   "lab": [
+    71.73,
+    7.81,
+    26.99
+   ],
+   "highlight": "#dcba90",
+   "samples": 2400
+  }
+ },
+ {
+  "id": "w05",
+  "group": "new",
+  "name": "Bouncy curls, black",
+  "curl": "3b to 3c",
+  "length": "above chest",
+  "image": "catalog/w05.jpg",
+  "colour": {
+   "hex": "#151316",
+   "lab": [
+    6.15,
+    1.43,
+    -1.81
+   ],
+   "highlight": "#232227",
+   "samples": 2400
+  }
+ },
+ {
+  "id": "w06",
+  "group": "new",
+  "name": "Straight with bangs, auburn",
+  "curl": "1 to 2a",
+  "length": "above chest",
+  "image": "catalog/w06.jpg",
+  "colour": {
+   "hex": "#633322",
+   "lab": [
+    27.13,
+    19.99,
+    19.94
+   ],
+   "highlight": "#834c34",
+   "samples": 2400
+  }
+ },
+ {
+  "id": "w10",
+  "group": "new",
+  "name": "Soft-wave bob, silver",
+  "curl": "2a to 2b",
+  "length": "short hair",
+  "image": "catalog/w10.jpg",
+  "colour": {
+   "hex": "#c6c3c7",
+   "lab": [
+    79.25,
+    1.45,
+    -1.42
+   ],
+   "highlight": "#d2d0d3",
+   "samples": 2400
+  }
+ }
+]

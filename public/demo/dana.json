@@ -1,0 +1,42 @@
+{
+ "about": "Dana is an AI-generated person. Wave and length were read by YouCam's hair analysis (hair-type-detection, hair-length-detection) on these photos on 26 Oct 2026; colour was read by our code from four taps on her hair; every try-on is a real YouCam hair-transfer result.",
+ "passport": {
+  "colour": {
+   "hex": "#513725",
+   "lab": [
+    25.529373982327353,
+    9.184512249895485,
+    15.855845495188177
+   ],
+   "spread": 18.537551692290503,
+   "highlight": {
+    "hex": "#79563f",
+    "lab": [
+     39.55751504488867,
+     11.403784611698441,
+     19.139914735236584
+    ]
+   }
+  },
+  "crop": "/demo/dana_crop.jpg",
+  "curl": "2A to 2B",
+  "curlTerm": "Slight to Medium Wavy",
+  "length": "above chest",
+  "density": null,
+  "note": "I usually tuck it behind my left ear."
+ },
+ "tryons": {
+  "w01": "demo/tryon_w01.jpg",
+  "w08": "demo/tryon_w08.jpg",
+  "w11": "demo/tryon_w11.jpg",
+  "w12": "demo/tryon_w12.jpg",
+  "w13": "demo/tryon_w13.jpg",
+  "w14": "demo/tryon_w14.jpg",
+  "w15": "demo/tryon_w15.jpg",
+  "w16": "demo/tryon_w16.jpg",
+  "w03": "demo/tryon_w03.jpg",
+  "w05": "demo/tryon_w05.jpg",
+  "w06": "demo/tryon_w06.jpg",
+  "w10": "demo/tryon_w10.jpg"
+ }
+}

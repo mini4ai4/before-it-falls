@@ -40,7 +40,18 @@ def bundle_function():
     return buf.getvalue()
 
 
+def sync_shared():
+    """The browser runs the same tested modules as the tests: copy them in."""
+    lib = APP / "public" / "lib"
+    lib.mkdir(exist_ok=True)
+    for name in ("colour.js", "match.js", "names.js"):
+        (lib / name).write_bytes((APP / "src" / name).read_bytes())
+    (APP / "public" / "catalog").mkdir(exist_ok=True)
+    (APP / "public" / "catalog" / "catalog.json").write_bytes((APP / "catalog" / "catalog.json").read_bytes())
+
+
 def static_files():
+    sync_shared()
     files = {}
     for p in sorted((APP / "public").rglob("*")):
         if p.is_file() and not p.name.startswith("."):

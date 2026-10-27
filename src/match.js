@@ -53,7 +53,7 @@ export function lengthScore(passportTerm, wigTerm) {
 export function colourWords(dE) {
   if (dE <= 2) return "same colour at arm's length";
   if (dE <= 5) return "very close colour";
-  if (dE <= 10) return "noticeably different shade";
+  if (dE <= 10) return "slightly different shade";
   return "a different colour";
 }
 

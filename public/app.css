@@ -44,14 +44,17 @@ h1 { font-variation-settings: var(--voice); font-weight: 520; font-size: 2.1rem;
 h2 { font-variation-settings: var(--plain); font-weight: 650; font-size: 1.15rem; margin: 26px 0 10px; }
 p.lede { color: var(--ink-soft); margin: 0 0 18px; }
 
-/* The tag: a white card with a punched hole and a red thread. */
+/* The tag: a white card with cut corners, a punched hole and a red thread.
+   Corners are cut with gradients, not clip-path, so the thread can hang outside. */
 .tag {
   position: relative;
-  background: var(--tag);
+  background:
+    linear-gradient(135deg, transparent 22px, var(--tag) 22.5px) top left / 51% 100% no-repeat,
+    linear-gradient(225deg, transparent 22px, var(--tag) 22.5px) top right / 51% 100% no-repeat;
   border-radius: var(--radius);
-  box-shadow: var(--shadow);
+  filter: drop-shadow(0 1px 0 rgba(35, 38, 42, 0.06)) drop-shadow(0 10px 16px rgba(35, 38, 42, 0.12));
   padding: 34px 20px 20px;
-  clip-path: polygon(14% 0, 86% 0, 100% 9%, 100% 100%, 0 100%, 0 9%);
+  margin-top: 30px;
 }
 .tag::before { /* the punched hole */
   content: "";
@@ -59,9 +62,11 @@ p.lede { color: var(--ink-soft); margin: 0 0 18px; }
   width: 16px; height: 16px; margin-left: -8px;
   border-radius: 50%;
   background: var(--lichen);
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.18), 0 0 0 3px #f4f5f2;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.22), 0 0 0 3px #f4f5f2;
+  z-index: 1;
 }
-.thread { position: absolute; top: -26px; left: calc(50% - 1px); width: 2px; height: 46px; background: var(--thread); border-radius: 2px; transform: rotate(8deg); transform-origin: bottom; }
+.thread { position: absolute; top: -30px; left: calc(50% - 1px); width: 2px; height: 50px; background: var(--thread); border-radius: 2px; transform: rotate(9deg); transform-origin: bottom; z-index: 2; }
+.thread::after { content: ""; position: absolute; bottom: -2px; left: -3px; width: 8px; height: 8px; border-radius: 50%; border: 2px solid var(--thread); }
 
 .fields { width: 100%; border-collapse: collapse; margin-top: 14px; }
 .fields th, .fields td { text-align: left; vertical-align: top; padding: 9px 0; border-top: 1px solid var(--rule); }
@@ -69,7 +74,7 @@ p.lede { color: var(--ink-soft); margin: 0 0 18px; }
 .fields td { font-variation-settings: var(--data); font-size: 0.9rem; }
 .fields td .muted { color: var(--ink-soft); }
 
-.swatch { display: inline-block; width: 44px; height: 44px; border-radius: 50%; background: var(--hair); box-shadow: inset 0 0 0 3px rgba(255, 255, 255, 0.6), 0 0 0 1px var(--rule); vertical-align: middle; }
+.swatch { flex-shrink: 0; display: inline-block; width: 44px; height: 44px; border-radius: 50%; background: var(--hair); box-shadow: inset 0 0 0 3px rgba(255, 255, 255, 0.6), 0 0 0 1px var(--rule); vertical-align: middle; }
 .swatch.small { width: 18px; height: 18px; box-shadow: 0 0 0 1px var(--rule); }
 
 .note { font-variation-settings: var(--voice); font-size: 1.15rem; border-bottom: 1px solid var(--rule); padding: 8px 0; margin-top: 10px; }
@@ -107,14 +112,18 @@ button[disabled] { opacity: 0.55; cursor: progress; }
 .board .today .photo { aspect-ratio: 3 / 4; }
 .label { font-variation-settings: var(--voice); font-size: 1.25rem; text-align: center; margin-top: 8px; }
 .wigs { display: grid; gap: 14px; }
-.wig { padding: 26px 12px 12px; }
+.wig { padding: 26px 12px 12px; margin-top: 18px; }
 .wig .row { display: grid; grid-template-columns: 1fr 26px; gap: 8px; }
 .wig .strip { border-radius: 6px; background: linear-gradient(180deg, var(--hair) 0 50%, var(--wig, #999) 50% 100%); }
 .wig .meta { font-variation-settings: var(--data); font-size: 0.74rem; margin-top: 8px; line-height: 1.35; }
 .wig .score { font-variation-settings: var(--plain); font-weight: 700; font-size: 1.35rem; }
 .wig .verdict { text-decoration: underline; text-decoration-color: var(--thread); text-underline-offset: 3px; }
 .wig button { min-height: 40px; font-size: 0.86rem; margin-top: 10px; }
-.wig.kept { box-shadow: 0 0 0 2px var(--thread), var(--shadow); }
+.wig.kept::after { /* a small archive stamp, not a box: the tag has cut corners */
+  content: "kept"; position: absolute; top: 34px; right: 16px; transform: rotate(-8deg);
+  font-variation-settings: var(--data); font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--thread); border: 2px solid var(--thread); border-radius: 6px; padding: 2px 7px; background: rgba(255, 255, 255, 0.85);
+}
 
 .catalog { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
 .catalog figure { margin: 0; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 0 0 1px var(--rule); cursor: pointer; }
@@ -135,5 +144,5 @@ footer.small a { color: inherit; }
 @media print {
   body { background: #fff; }
   header.top, .actions, .no-print { display: none !important; }
-  .tag { box-shadow: none; border: 1px solid var(--rule); clip-path: none; }
+  .tag { filter: none; border: 1px solid var(--rule); background: #fff; }
 }
