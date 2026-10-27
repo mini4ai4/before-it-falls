@@ -1,0 +1,139 @@
+/* Before It Falls — "The Keepsake": archive tags on a red thread.
+   Recursive carries both voices: CASL 1 for the person, MONO 1 for measurements. */
+@import url("https://fonts.googleapis.com/css2?family=Recursive:slnt,wght,CASL,CRSV,MONO@-15..0,300..800,0..1,0..1,0..1&display=swap");
+
+:root {
+  --lichen: #eceeea;
+  --tag: #ffffff;
+  --ink: #23262a;
+  --ink-soft: #5b6066;
+  --moss: #4d6150;
+  --moss-deep: #3d4e40;
+  --thread: #a3352b;
+  --rule: #d9dcd6;
+  --hair: #6b5544; /* replaced at runtime by the person's measured colour */
+  --radius: 14px;
+  --shadow: 0 1px 0 rgba(35, 38, 42, 0.06), 0 10px 30px -18px rgba(35, 38, 42, 0.45);
+  --voice: "CASL" 1, "MONO" 0, "CRSV" 1;
+  --data: "CASL" 0, "MONO" 1;
+  --plain: "CASL" 0.3, "MONO" 0;
+}
+
+* { box-sizing: border-box; }
+
+html, body { margin: 0; background: var(--lichen); color: var(--ink); }
+
+body {
+  font-family: "Recursive", ui-sans-serif, system-ui, sans-serif;
+  font-variation-settings: var(--plain);
+  font-size: 17px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+.voice { font-variation-settings: var(--voice); font-weight: 420; }
+.data { font-variation-settings: var(--data); font-size: 0.86em; letter-spacing: -0.01em; }
+
+main { max-width: 460px; margin: 0 auto; padding: 20px 18px 120px; }
+
+header.top { display: flex; align-items: baseline; justify-content: space-between; padding: 10px 0 18px; }
+header.top .mark { font-variation-settings: var(--voice); font-size: 1.45rem; font-weight: 500; }
+header.top .step { font-variation-settings: var(--data); font-size: 0.78rem; color: var(--ink-soft); }
+
+h1 { font-variation-settings: var(--voice); font-weight: 520; font-size: 2.1rem; line-height: 1.12; margin: 6px 0 12px; }
+h2 { font-variation-settings: var(--plain); font-weight: 650; font-size: 1.15rem; margin: 26px 0 10px; }
+p.lede { color: var(--ink-soft); margin: 0 0 18px; }
+
+/* The tag: a white card with a punched hole and a red thread. */
+.tag {
+  position: relative;
+  background: var(--tag);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 34px 20px 20px;
+  clip-path: polygon(14% 0, 86% 0, 100% 9%, 100% 100%, 0 100%, 0 9%);
+}
+.tag::before { /* the punched hole */
+  content: "";
+  position: absolute; top: 12px; left: 50%;
+  width: 16px; height: 16px; margin-left: -8px;
+  border-radius: 50%;
+  background: var(--lichen);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.18), 0 0 0 3px #f4f5f2;
+}
+.thread { position: absolute; top: -26px; left: calc(50% - 1px); width: 2px; height: 46px; background: var(--thread); border-radius: 2px; transform: rotate(8deg); transform-origin: bottom; }
+
+.fields { width: 100%; border-collapse: collapse; margin-top: 14px; }
+.fields th, .fields td { text-align: left; vertical-align: top; padding: 9px 0; border-top: 1px solid var(--rule); }
+.fields th { font-variation-settings: var(--plain); font-weight: 600; width: 34%; font-size: 0.92rem; }
+.fields td { font-variation-settings: var(--data); font-size: 0.9rem; }
+.fields td .muted { color: var(--ink-soft); }
+
+.swatch { display: inline-block; width: 44px; height: 44px; border-radius: 50%; background: var(--hair); box-shadow: inset 0 0 0 3px rgba(255, 255, 255, 0.6), 0 0 0 1px var(--rule); vertical-align: middle; }
+.swatch.small { width: 18px; height: 18px; box-shadow: 0 0 0 1px var(--rule); }
+
+.note { font-variation-settings: var(--voice); font-size: 1.15rem; border-bottom: 1px solid var(--rule); padding: 8px 0; margin-top: 10px; }
+
+button, .button {
+  appearance: none; border: 0; cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  width: 100%; min-height: 54px; padding: 0 22px; border-radius: 999px;
+  background: var(--moss); color: #fff;
+  font: inherit; font-variation-settings: var(--plain); font-weight: 600; font-size: 1.02rem;
+  text-decoration: none;
+  transition: background 0.15s ease, transform 0.12s ease;
+}
+button:hover, .button:hover { background: var(--moss-deep); }
+button:active { transform: scale(0.985); }
+button.outline, .button.outline { background: transparent; color: var(--moss); box-shadow: inset 0 0 0 2px var(--moss); }
+button[disabled] { opacity: 0.55; cursor: progress; }
+.actions { display: grid; gap: 10px; margin-top: 22px; }
+
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0 16px; }
+.chip { font-variation-settings: var(--data); font-size: 0.74rem; padding: 5px 10px; border-radius: 999px; background: #fff; box-shadow: 0 0 0 1px var(--rule); color: var(--ink-soft); }
+.chip.on { background: var(--moss); color: #fff; box-shadow: none; }
+.chip.done { color: var(--moss); box-shadow: 0 0 0 1px var(--moss); }
+
+.photo { position: relative; border-radius: 12px; overflow: hidden; background: #dfe2dc; aspect-ratio: 3 / 4; touch-action: manipulation; }
+.photo img, .photo canvas { width: 100%; height: 100%; object-fit: cover; display: block; }
+.tap { position: absolute; width: 30px; height: 30px; margin: -15px 0 0 -15px; border-radius: 50%; border: 2px solid var(--thread); background: rgba(255, 255, 255, 0.55); pointer-events: none; animation: pop 0.25s ease-out; }
+@keyframes pop { from { transform: scale(0.4); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+.badge { position: absolute; left: 50%; bottom: 10px; transform: translateX(-50%); background: rgba(255, 255, 255, 0.92); border-radius: 999px; padding: 4px 12px; font-variation-settings: var(--data); font-size: 0.74rem; white-space: nowrap; }
+
+/* Try-on: today's tag on the left, wig tags on the thread to the right. */
+.board { display: grid; grid-template-columns: 38% 1fr; gap: 14px; align-items: start; }
+.board .today { position: sticky; top: 12px; }
+.board .today .photo { aspect-ratio: 3 / 4; }
+.label { font-variation-settings: var(--voice); font-size: 1.25rem; text-align: center; margin-top: 8px; }
+.wigs { display: grid; gap: 14px; }
+.wig { padding: 26px 12px 12px; }
+.wig .row { display: grid; grid-template-columns: 1fr 26px; gap: 8px; }
+.wig .strip { border-radius: 6px; background: linear-gradient(180deg, var(--hair) 0 50%, var(--wig, #999) 50% 100%); }
+.wig .meta { font-variation-settings: var(--data); font-size: 0.74rem; margin-top: 8px; line-height: 1.35; }
+.wig .score { font-variation-settings: var(--plain); font-weight: 700; font-size: 1.35rem; }
+.wig .verdict { text-decoration: underline; text-decoration-color: var(--thread); text-underline-offset: 3px; }
+.wig button { min-height: 40px; font-size: 0.86rem; margin-top: 10px; }
+.wig.kept { box-shadow: 0 0 0 2px var(--thread), var(--shadow); }
+
+.catalog { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.catalog figure { margin: 0; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 0 0 1px var(--rule); cursor: pointer; }
+.catalog figure img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block; }
+.catalog figcaption { font-variation-settings: var(--data); font-size: 0.66rem; padding: 6px; line-height: 1.25; }
+.catalog figure.picked { box-shadow: 0 0 0 2px var(--moss); }
+
+.notice { background: #fff; border-left: 3px solid var(--thread); border-radius: 8px; padding: 12px 14px; font-size: 0.92rem; color: var(--ink-soft); }
+.quote { font-variation-settings: var(--voice); font-size: 1.1rem; color: var(--ink); }
+.source { font-variation-settings: var(--data); font-size: 0.72rem; color: var(--ink-soft); }
+
+.spinner { width: 18px; height: 18px; border-radius: 50%; border: 2px solid rgba(255, 255, 255, 0.4); border-top-color: #fff; animation: spin 0.8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+footer.small { margin-top: 40px; font-size: 0.78rem; color: var(--ink-soft); }
+footer.small a { color: inherit; }
+
+@media print {
+  body { background: #fff; }
+  header.top, .actions, .no-print { display: none !important; }
+  .tag { box-shadow: none; border: 1px solid var(--rule); clip-path: none; }
+}
