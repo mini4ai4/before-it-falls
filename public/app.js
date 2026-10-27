@@ -74,23 +74,30 @@ function capture() {
     <p class="lede">Stand near a window if you can. Daylight shows your real colour.</p>
     ${next ? `
       <div class="tag"><span class="thread"></span>
-        <p class="voice" style="margin:0 0 12px">${esc(next[2])}</p>
-        <label class="button">${esc(next[1])}: take or choose a photo
-          <input type="file" accept="image/*" capture="user" id="shot" hidden>
-        </label>
+        <p class="data" style="margin:0 0 6px;color:var(--ink-soft)">${esc(next[1])}</p><p class="voice" style="margin:0 0 14px">${esc(next[2])}</p>
+        <div style="display:grid;gap:10px">
+          <label class="button">Take the photo
+            <input type="file" accept="image/*" capture="user" class="shot" hidden>
+          </label>
+          <label class="button outline">Choose from my photos
+            <input type="file" accept="image/*" class="shot" hidden>
+          </label>
+        </div>
       </div>` : ""}
     <div class="catalog" style="margin-top:16px">${SHOTS.filter(([k]) => state.photos[k]).map(([k, label]) => `<figure><img src="${state.photos[k].url}" alt="${esc(label)}"><figcaption>${esc(label)}</figcaption></figure>`).join("")}</div>
     <div class="actions">
       ${ready ? `<button id="next">Next: show us your colour</button>` : ""}
       <button id="back" class="outline">Back</button>
     </div>`);
-  const input = document.getElementById("shot");
-  if (input) input.onchange = async () => {
-    const file = input.files[0];
-    if (!file) return;
-    state.photos[next[0]] = await normalise(file);
-    capture();
-  };
+  // One input opens the camera; the other (no capture attribute) opens the photo library.
+  app.querySelectorAll("input.shot").forEach((input) => {
+    input.onchange = async () => {
+      const file = input.files[0];
+      if (!file) return;
+      state.photos[next[0]] = await normalise(file);
+      capture();
+    };
+  });
   document.getElementById("next")?.addEventListener("click", tap);
   document.getElementById("back").onclick = welcome;
 }

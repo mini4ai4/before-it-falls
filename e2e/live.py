@@ -7,9 +7,9 @@ T = "/Users/mini/agents/sora/hackathons/youcam_2026/test"
 
 
 def put_file(path):
-    wait("#shot")
+    wait("input.shot")
     root = c.send("DOM.getDocument")["root"]["nodeId"]
-    node = c.send("DOM.querySelector", nodeId=root, selector="#shot")["nodeId"]
+    node = c.send("DOM.querySelector", nodeId=root, selector="input.shot:not([capture])")["nodeId"]
     c.send("DOM.setFileInputFiles", nodeId=node, files=[path])
 
 
