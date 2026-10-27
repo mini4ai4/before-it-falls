@@ -2,6 +2,7 @@
 import { readHairColour, rgbToLab, hexToRgb } from "/lib/colour.js";
 import { rankWigs } from "/lib/match.js";
 import { describeHair } from "/lib/names.js";
+import { hang } from "/sway.js";
 
 const app = document.getElementById("app");
 const ACS_URL = "https://www.cancer.org/cancer/managing-cancer/side-effects/hair-skin-nails/hair-loss/choosing-and-wearing-wig.html";
@@ -34,10 +35,23 @@ function screen(step, html) {
 
 // ---------- 1. Welcome ----------
 function welcome() {
-  screen("", `
-    <h1>Keep your hair as it is today.</h1>
+  // Long threads first: each tag is its own layer, so earlier strings paint behind later tags.
+  const tags = [
+    { src: "/demo/tryon_w06.jpg", cap: "69", x: "84%", len: 196, w: 78 },
+    { src: "/demo/tryon_w01.jpg", cap: "83", x: "16%", len: 150, w: 92 },
+    { src: "/demo/tryon_w15.jpg", cap: "73", x: "78%", len: 26, w: 84 },
+    { src: "/demo/dana_front.jpg", cap: "Today", x: "47%", len: 70, w: 138, today: true },
+  ];  screen("", `
+    <div class="mobile" id="mobile" aria-hidden="true">
+      ${tags.map((t) => `<div class="hang" data-hang style="--x:${t.x};--len:${t.len}px;--w:${t.w}px"><div class="string"></div><div class="mini ${t.today ? "today" : ""}"><img src="${t.src}" alt=""><div class="cap">${t.cap}</div></div></div>`).join("")}
+    </div>
+    <h1 class="hero">Keep your hair as it is today.</h1>
     <p class="lede">So the wig you choose can match it, when the time comes.</p>
-    <div class="notice">
+    <div class="actions" style="margin-top:14px">
+      <button id="live">Begin with my photos</button>
+      <button id="demo" class="outline">See Dana's example</button>
+    </div>
+    <div class="notice" style="margin-top:26px">
       <p class="quote">“If you are able to plan ahead, there are a few steps you can take to fit and match your wig before you lose your hair.”</p>
       <p class="source">American Cancer Society, <a href="${ACS_URL}" target="_blank" rel="noopener">Wigs for Hair Loss</a></p>
     </div>
@@ -45,15 +59,13 @@ function welcome() {
     <ol>
       <li>Take three photos, the way a fitter would want them.</li>
       <li>Read your colour, wave and length, and keep them on one tag.</li>
-      <li>Try wigs on your own face, each with a match score.</li>
+      <li>Try wigs on your own face: drag the thread to compare.</li>
       <li>Share the tag with your wig fitter, or print it.</li>
-    </ol>
-    <div class="actions">
-      <button id="live">Start with my photos</button>
-      <button id="demo" class="outline">See Dana's example first</button>
-    </div>`);
-  document.getElementById("live").onclick = () => { state.mode = "live"; capture(); };
-  document.getElementById("demo").onclick = loadDemo;
+    </ol>`);
+  state.unhang?.();
+  state.unhang = hang(document.getElementById("mobile"));
+  document.getElementById("live").onclick = () => { state.unhang?.(); state.mode = "live"; capture(); };
+  document.getElementById("demo").onclick = () => { state.unhang?.(); loadDemo(); };
 }
 
 // ---------- 2. Capture ----------
@@ -265,48 +277,86 @@ function passport() {
   document.getElementById("share").onclick = share;
 }
 
-// ---------- 6. Try on ----------
+// ---------- 6. Try on: drag the red thread across your face ----------
 function tryOn() {
   const ranked = rankWigs(state.passport, state.catalog).filter(({ wig }) => (state.filter === "close" ? wig.group === "close" : wig.group !== "close"));
+  if (!ranked.some((r) => r.wig.id === state.current)) state.current = ranked[0]?.wig.id;
+  const { wig, match } = ranked.find((r) => r.wig.id === state.current);
+  // The example's try-ons are already real YouCam results, so it opens straight onto the thread.
+  if (state.mode === "demo" && !state.tryons[wig.id] && state.demo.tryons[wig.id]) state.tryons[wig.id] = `/${state.demo.tryons[wig.id]}`;
+  const done = state.tryons[wig.id];
+  const kept = state.kept.includes(wig.id);
   screen("Step 4 of 4", `
-    <h1>Try on.</h1>
+    <h1>Drag to try on.</h1>
     <div class="chips">
       <button class="chip ${state.filter === "close" ? "on" : ""}" data-f="close" style="width:auto;min-height:0">Close to you</button>
       <button class="chip ${state.filter === "new" ? "on" : ""}" data-f="new" style="width:auto;min-height:0">Something new</button>
     </div>
-    <div class="board">
-      <div class="today"><div class="tag" style="padding:26px 8px 10px"><span class="thread"></span><div class="photo"><img src="${state.photos.front.url}" alt="Today"></div><div class="label">Today</div></div></div>
-      <div class="wigs">${ranked.map(({ wig, match }) => wigTag(wig, match)).join("")}</div>
+    <div class="tag" style="padding:30px 12px 14px"><span class="thread"></span>
+      ${done ? `<div class="stamp"><b>${match.total}</b><small>${esc(match.verdict)}</small></div>` : ""}
+      <div class="compare" id="cmp">
+        <img src="${state.photos.front.url}" alt="Your hair today">
+        <img class="after" src="${done || "/" + wig.image}" alt="${esc(wig.name)}${done ? " on your face" : ""}">
+        ${done ? `<div class="divider"></div><div class="knot" role="slider" aria-label="Drag to compare" tabindex="0"></div><span class="side l">today</span><span class="side r">wig</span>`
+               : `<div class="veil"><button id="tryit">Try it on my face</button></div>`}
+      </div>
+      <p class="data" style="margin:12px 0 0;font-size:0.92rem">${esc(wig.name)}</p>
+      <div class="duo"><span style="background:${esc(state.passport.colour.hex)}">your colour</span><span style="background:${esc(wig.colour.hex)}">this wig</span></div>
+      <p class="source" style="margin:2px 0 0">${esc(match.reasons.join(" · "))}</p>
+      ${done ? `<div class="actions" style="margin-top:14px"><button id="keep" class="${kept ? "" : "outline"}">${kept ? "Kept for my fitter ✓" : "Keep for my fitter"}</button></div>` : ""}
     </div>
-    <details class="notice" style="margin-top:18px"><summary>How the score works</summary>
+    <div class="reel" id="reel">${ranked.map(({ wig: w, match: m }) => `
+      <div class="mini ${w.id === state.current ? "on" : ""}" data-pick="${w.id}">${state.kept.includes(w.id) ? `<span class="kept-dot"></span>` : ""}
+        <img src="${state.tryons[w.id] || "/" + w.image}" alt="${esc(w.name)}"><div class="cap">${m.total}</div></div>`).join("")}
+    </div>
+    <details class="notice" style="margin-top:12px"><summary>How the score works</summary>
       <p>Every number is worked out the same way, with no opinions from a model. <b>Colour counts 60%</b>: the CIEDE2000 difference between your measured colour and the wig's (2 or less looks the same at arm's length). <b>Wave counts 25%</b>: how far apart the curl types are. <b>Length counts 15%</b>: a longer wig costs half as much as a shorter one, because a fitter can trim a wig but can't make it longer. The try-on photo is YouCam's hair transfer on your own face.</p>
     </details>
     <div class="actions">
       <button id="share">${state.kept.length ? `Share my ${state.kept.length} favourite${state.kept.length > 1 ? "s" : ""} with my fitter` : "Share my tag with my fitter"}</button>
       <button id="back" class="outline">Back to my tag</button>
     </div>`);
-  app.querySelectorAll("[data-f]").forEach((b) => { b.onclick = () => { state.filter = b.dataset.f; tryOn(); }; });
-  app.querySelectorAll("[data-try]").forEach((b) => { b.onclick = () => runTryOn(b.dataset.try, b); });
-  app.querySelectorAll("[data-keep]").forEach((b) => { b.onclick = () => toggleKeep(b.dataset.keep); });
+  app.querySelectorAll("[data-f]").forEach((b) => { b.onclick = () => { state.filter = b.dataset.f; state.current = null; tryOn(); }; });
+  app.querySelectorAll("[data-pick]").forEach((t) => { t.onclick = () => { state.current = t.dataset.pick; tryOn(); }; });
+  document.getElementById("tryit")?.addEventListener("click", (e) => runTryOn(wig.id, e.currentTarget));
+  document.getElementById("keep")?.addEventListener("click", () => toggleKeep(wig.id));
   document.getElementById("share").onclick = share;
   document.getElementById("back").onclick = passport;
+  document.querySelector(".reel .on")?.scrollIntoView({ inline: "center", block: "nearest" });
+  if (done) dragThread(document.getElementById("cmp"));
 }
 
-function wigTag(wig, match) {
-  const done = state.tryons[wig.id];
-  const kept = state.kept.includes(wig.id);
-  return `
-    <div class="tag wig ${kept ? "kept" : ""}" style="--wig:${esc(wig.colour.hex)}"><span class="thread"></span>
-      <div class="row"><div class="photo"><img src="${done || "/" + wig.image}" alt="${esc(wig.name)}${done ? " tried on" : ""}"></div><div class="strip" title="Your colour above, the wig's below"></div></div>
-      <div class="meta">${esc(wig.name)}<br><span class="score">${match.total}</span> · <span class="verdict">${esc(match.verdict.toLowerCase())}</span><br><span style="color:var(--ink-soft)">${esc(match.reasons.join(" · "))}</span></div>
-      ${done ? `<button data-keep="${wig.id}" class="${kept ? "" : "outline"}">${kept ? "Kept ✓" : "Keep for my fitter"}</button>` : `<button data-try="${wig.id}" class="outline">Try it on</button>`}
-    </div>`;
+// The red thread is the divider: drag it to reveal the wig on your own face.
+function dragThread(cmp) {
+  const set = (f) => cmp.style.setProperty("--cut", `${(Math.max(0.03, Math.min(0.97, f)) * 100).toFixed(1)}%`);
+  const from = (e) => { const r = cmp.getBoundingClientRect(); return (e.clientX - r.left) / r.width; };
+  let dragging = false;
+  cmp.addEventListener("pointerdown", (e) => { dragging = true; cmp.setPointerCapture(e.pointerId); set(from(e)); });
+  cmp.addEventListener("pointermove", (e) => { if (dragging) set(from(e)); });
+  cmp.addEventListener("pointerup", () => { dragging = false; });
+  cmp.querySelector(".knot")?.addEventListener("keydown", (e) => {
+    const now = parseFloat(cmp.style.getPropertyValue("--cut") || "50") / 100;
+    if (e.key === "ArrowLeft") set(now - 0.05);
+    if (e.key === "ArrowRight") set(now + 0.05);
+  });
+  // A first glide shows what the thread does, unless motion is reduced.
+  if (!matchMedia("(prefers-reduced-motion: reduce)").matches && !state.glided) {
+    state.glided = true;
+    const t0 = performance.now();
+    const step = (t) => {
+      const p = Math.min(1, (t - t0) / 1400);
+      const ease = 1 - (1 - p) ** 3;
+      set(0.92 - 0.42 * ease);
+      if (p < 1 && !dragging) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
 }
 
 async function runTryOn(id, button) {
   const wig = state.catalog.find((w) => w.id === id);
   button.disabled = true;
-  button.innerHTML = `<span class="spinner" style="border-top-color:var(--moss);border-color:rgba(77,97,80,.3)"></span> Trying it on…`;
+  button.innerHTML = `<span class="spinner"></span> Trying it on…`;
   try {
     if (state.mode === "demo") {
       state.tryons[id] = `/${state.demo.tryons[id]}`;
