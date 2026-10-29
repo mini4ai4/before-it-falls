@@ -2,7 +2,7 @@
 
     python3 scripts/deploy.py            # plan only
     python3 scripts/deploy.py --yes      # deploy
-    python3 scripts/deploy.py --yes --env  # also (re)set YOUCAM_API_KEY from the vault first
+    python3 scripts/deploy.py --yes --env  # also (re)set YOUCAM_API_KEY on the site from the environment
 
 Static files come from public/. The API function is bundled by esbuild into one
 .mjs (Lambda format) and uploaded as a zip. /api/* is routed to it by _redirects.
@@ -20,7 +20,7 @@ VAULT = os.environ.get("SECRET_VAULT_CMD", "")
 
 
 def secret(env_name, label):
-    """Environment first (anyone can deploy their own copy); our local vault as a fallback."""
+    """Environment first (anyone can deploy their own copy); an optional local secret command as a fallback."""
     if os.environ.get(env_name):
         return os.environ[env_name]
     if not VAULT:
@@ -79,7 +79,7 @@ def static_files():
 def set_env(site):
     key = secret("YOUCAM_API_KEY", "S45")
     if not key.startswith("sk-"):
-        raise SystemExit("Set YOUCAM_API_KEY (or have it in the local vault)")
+        raise SystemExit("Set YOUCAM_API_KEY in the environment")
     acct = site["account_id"]
     existing = api(f"/accounts/{acct}/env?site_id={site['id']}")
     if any(e.get("key") == "YOUCAM_API_KEY" for e in existing):

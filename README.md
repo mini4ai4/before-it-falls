@@ -45,7 +45,7 @@ Colour is read by our own code (`src/colour.js`): the median of the tapped stran
 ```bash
 npm install          # esbuild, for the function bundle
 npm test             # 36 tests: colour science, scoring, names, YouCam client, API function, example data
-python3 scripts/deploy.py --yes --env   # Netlify site + function, YOUCAM_API_KEY from the environment vault
+NETLIFY_TOKEN=... YOUCAM_API_KEY=... python3 scripts/deploy.py --yes --env   # Netlify site + function; the key is set as a site env var
 ```
 
 To walk the example in a headless Chrome and save screenshots (no YouCam calls): copy `src/colour.js`, `match.js` and `names.js` into `public/lib/`, serve `public/` (`python3 -m http.server 8000`), then `python3 e2e/drive.py http://127.0.0.1:8000 OUT_DIR 390 844`.

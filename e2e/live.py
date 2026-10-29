@@ -1,9 +1,15 @@
-"""Live path: real photos through the real UI → our function → YouCam (≈6 units)."""
-import json, sys, time
-sys.path.insert(0, "/Users/mini/agents/sora/hackathons/youcam_2026/app/e2e")
+"""Live path: real photos through the real UI → our function → YouCam (≈6 units).
+
+    PHOTOS_DIR=/path/to/photos python3 e2e/live.py
+
+PHOTOS_DIR holds src.jpg, src_left.jpg and src_right.jpg (front, left, right).
+"""
+import json, os, sys, time
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 from drive import c, ev, wait, click, images_loaded, shot
 
-T = "/Users/mini/agents/sora/hackathons/youcam_2026/test"
+T = os.environ.get("PHOTOS_DIR", "photos")
 
 
 def put_file(path):
