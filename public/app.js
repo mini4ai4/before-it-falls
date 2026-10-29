@@ -284,6 +284,9 @@ function passport() {
   document.getElementById("share").onclick = share;
 }
 
+// Small 240 px copies for the reel: catalogue photos and the example's frozen try-ons. Live try-ons are used as they are.
+const thumb = (url) => (/^\/(catalog|demo)\/[^/]+\.jpg$/.test(url) ? url.replace(/\/([^/]+\.jpg)$/, "/t/$1") : url);
+
 // ---------- 6. Try on: drag the red thread across your face ----------
 function tryOn() {
   const split = splitByCloseness(rankWigs(state.passport, state.catalog));
@@ -315,7 +318,7 @@ function tryOn() {
     </div>
     <div class="reel" id="reel">${ranked.map(({ wig: w, match: m }) => `
       <div class="mini ${w.id === state.current ? "on" : ""}" data-pick="${w.id}">${state.kept.includes(w.id) ? `<span class="kept-dot"></span>` : ""}
-        <img src="${state.tryons[w.id] || "/" + w.image}" alt="${esc(w.name)}"><div class="cap">${m.total}</div></div>`).join("")}
+        <img src="${thumb(state.tryons[w.id] || "/" + w.image)}" alt="${esc(w.name)}" loading="lazy" decoding="async"><div class="cap">${m.total}</div></div>`).join("")}
     </div>
     <details class="notice" style="margin-top:12px"><summary>How the score works</summary>
       <p>Every number is worked out the same way, with no opinions from a model. <b>Colour counts 60%</b>: the CIEDE2000 difference between your measured colour and the wig's (2 or less looks the same at arm's length). <b>Wave counts 25%</b>: how far apart the curl types are. <b>Length counts 15%</b>: a longer wig costs half as much as a shorter one, because a fitter can trim a wig but can't make it longer. The try-on photo is YouCam's hair transfer on your own face.</p>

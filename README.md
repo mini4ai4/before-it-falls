@@ -18,7 +18,7 @@ The American Cancer Society tells people facing cancer treatment: *"If you are a
 |---|---|---|
 | Wave (curl type) | `POST /s2s/v2.0/task/hair-type-detection` (front, right, left) | Curl class 1–4C for the passport and the match |
 | Length | `POST /s2s/v2.0/task/hair-length-detection` | Length class for the passport and the match |
-| Density | `POST /s2s/v2.0/task/hair-density-detection` (top-of-head photo, optional) | Density level 1–4 for the fitter |
+| Density (optional) | `POST /s2s/v2.0/task/hair-density-detection` (top-of-head photo, head bowed) | Level 1–4 for the fitter, when the photo's angle allows it; the generated example shows "not recorded" |
 | Try-on | `POST /s2s/v2.1/task/hair-transfer` with the wig product photo as the custom reference | Shows the wig on the person's own face |
 | Files and balance | `POST /s2s/v2.0/file`, `GET /s2s/v1.0/client/credit` | Uploads, and a budget guard |
 
