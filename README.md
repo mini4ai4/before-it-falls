@@ -18,9 +18,10 @@ The American Cancer Society tells people facing cancer treatment: *"If you are a
 |---|---|---|
 | Wave (curl type) | `POST /s2s/v2.0/task/hair-type-detection` (front, right, left) | Curl class 1–4C for the passport and the match |
 | Length | `POST /s2s/v2.0/task/hair-length-detection` | Length class for the passport and the match |
-| Density (optional) | `POST /s2s/v2.0/task/hair-density-detection` (top-of-head photo, head bowed) | Level 1–4 for the fitter, when the photo's angle allows it; the generated example shows "not recorded" |
 | Try-on | `POST /s2s/v2.1/task/hair-transfer` with the wig product photo as the custom reference | Shows the wig on the person's own face |
 | Files and balance | `POST /s2s/v2.0/file`, `GET /s2s/v1.0/client/credit` | Uploads, and a budget guard |
+
+Tried and not used: `hair-density-detection`. We wired it to the optional top-of-head photo, but it never returned a level on our photos (it rejected the head angle each time), so the passport says density is "not recorded" and we don't count it as a feature.
 
 ## How the match score works
 
@@ -43,9 +44,11 @@ Colour is read by our own code (`src/colour.js`): the median of the tapped stran
 
 ```bash
 npm install          # esbuild, for the function bundle
-npm test             # 32 tests: colour science, scoring, names, YouCam client, API function
+npm test             # 36 tests: colour science, scoring, names, YouCam client, API function, example data
 python3 scripts/deploy.py --yes --env   # Netlify site + function, YOUCAM_API_KEY from the environment vault
 ```
+
+To walk the example in a headless Chrome and save screenshots (no YouCam calls): copy `src/colour.js`, `match.js` and `names.js` into `public/lib/`, serve `public/` (`python3 -m http.server 8000`), then `python3 e2e/drive.py http://127.0.0.1:8000 OUT_DIR 390 844`.
 
 `public/` is the static app (plain ES modules), `netlify/functions/api.js` is the only server code (upload, task, status, health), `src/` holds the shared, tested modules the browser also loads.
 

@@ -264,7 +264,7 @@ function passportTag(p, { editable = false } = {}) {
         <tr><th>Colour</th><td>${esc(p.colour.hex)}${p.colour.spread > 8 ? ` · strands ${esc(p.colour.highlight.hex)}` : ""}<br><span class="muted">${esc(d.fitter)}</span></td></tr>
         <tr><th>Wave</th><td>${esc(p.curl)}<br><span class="muted">${esc(p.curlTerm)}</span></td></tr>
         <tr><th>Length</th><td>${esc(p.length)}</td></tr>
-        <tr><th>Density</th><td>${p.density ? `Level ${esc(p.density)} of 4` : `<span class="muted">add a top-of-head photo to fill this in</span>`}</td></tr>
+        <tr><th>Density</th><td>${p.density ? `Level ${esc(p.density)} of 4` : `<span class="muted">not recorded</span>`}</td></tr>
       </table>
       ${editable ? `<textarea class="note" id="note" rows="2" maxlength="160" placeholder="Anything your fitter should know? For example: I tuck it behind my left ear." style="width:100%;border:0;background:transparent;font:inherit;font-variation-settings:var(--voice);resize:none">${esc(p.note)}</textarea>` : p.note ? `<p class="note">${esc(p.note)}</p>` : ""}
     </div>`;
