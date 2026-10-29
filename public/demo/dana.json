@@ -1,5 +1,6 @@
 {
  "about": "Dana is an AI-generated person. Wave and length were read by YouCam's hair analysis (hair-type-detection, hair-length-detection) on these photos on 26 Oct 2026; colour was read by our code from four taps on her hair; every try-on is a real YouCam hair-transfer result.",
+ "lead": "w06",
  "passport": {
   "colour": {
    "hex": "#513725",
@@ -37,6 +38,14 @@
   "w03": "demo/tryon_w03.jpg",
   "w05": "demo/tryon_w05.jpg",
   "w06": "demo/tryon_w06.jpg",
-  "w10": "demo/tryon_w10.jpg"
+  "w10": "demo/tryon_w10.jpg",
+  "w17": "demo/tryon_w17.jpg",
+  "w18": "demo/tryon_w18.jpg",
+  "w19": "demo/tryon_w19.jpg",
+  "w20": "demo/tryon_w20.jpg",
+  "w21": "demo/tryon_w21.jpg",
+  "w22": "demo/tryon_w22.jpg",
+  "w23": "demo/tryon_w23.jpg",
+  "w24": "demo/tryon_w24.jpg"
  }
 }
