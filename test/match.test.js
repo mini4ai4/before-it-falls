@@ -51,3 +51,17 @@ test("verdict bands", () => {
   assert.equal(verdict(55), "A change");
   assert.equal(verdict(20), "A new look");
 });
+
+test("close-to-you is worked out per person, not fixed in the catalogue", async () => {
+  const { splitByCloseness } = await import("../src/match.js");
+  const lab = (hex) => rgbToLab(hexToRgb(hex));
+  const wig = (id, hex, curl, length) => ({ id, curl, length, colour: { hex, lab: lab(hex) } });
+  const wigs = [wig("wave", "#644734", "2a to 2b", "above chest"), wig("coils", "#151316", "4a to 4c", "short hair"),
+                wig("grey", "#c6c3c7", "1 to 2a", "short hair"), wig("bob", "#cfa97f", "1 to 2a", "short hair")];
+  const coily = { colour: { lab: lab("#141214") }, curl: "4a to 4c", length: "short hair" };
+  const wavy = { colour: { lab: lab("#66493a") }, curl: "2a to 2b", length: "above chest" };
+  assert.equal(splitByCloseness(rankWigs(coily, wigs)).close[0].wig.id, "coils");
+  assert.equal(splitByCloseness(rankWigs(wavy, wigs)).close[0].wig.id, "wave");
+  const s = splitByCloseness(rankWigs(coily, wigs));
+  assert.ok(s.close.length >= 3 && s.close.length + s.other.length === wigs.length);
+});

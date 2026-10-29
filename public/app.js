@@ -1,6 +1,6 @@
 // Before It Falls — the patient's side. Plain modules, no framework.
 import { readHairColour, rgbToLab, hexToRgb } from "/lib/colour.js";
-import { rankWigs } from "/lib/match.js";
+import { rankWigs, splitByCloseness } from "/lib/match.js";
 import { describeHair } from "/lib/names.js";
 import { hang } from "/sway.js";
 
@@ -286,7 +286,8 @@ function passport() {
 
 // ---------- 6. Try on: drag the red thread across your face ----------
 function tryOn() {
-  const ranked = rankWigs(state.passport, state.catalog).filter(({ wig }) => (state.filter === "close" ? wig.group === "close" : wig.group !== "close"));
+  const split = splitByCloseness(rankWigs(state.passport, state.catalog));
+  const ranked = state.filter === "close" ? split.close : split.other;
   if (!ranked.some((r) => r.wig.id === state.current)) state.current = ranked[0]?.wig.id;
   const { wig, match } = ranked.find((r) => r.wig.id === state.current);
   // The example's try-ons are already real YouCam results, so it opens straight onto the thread.

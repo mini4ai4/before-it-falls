@@ -65,3 +65,17 @@ test("live calls pause politely when the budget runs low", async () => {
 test("unknown routes are 404", async () => {
   assert.equal((await call("GET", "/api/nope")).statusCode, 404);
 });
+
+test("only our own page may start paid work, and each visitor has an hourly share", async () => {
+  resetForTests();
+  const task = (headers) => handler({ httpMethod: "POST", path: "/api/task", headers,
+    body: JSON.stringify({ feature: "hair-transfer", body: { src_file_id: "FILEID123456", ref_file_id: "FILEID654321" } }) });
+  assert.equal((await task({ Origin: "https://evil.example" })).statusCode, 429);
+  assert.equal((await task({ origin: "https://before-it-falls.netlify.app", "x-nf-client-connection-ip": "1.2.3.4" })).statusCode, 200);
+  let last;
+  for (let i = 0; i < 30; i++) last = await task({ "x-nf-client-connection-ip": "5.6.7.8" });
+  assert.equal(last.statusCode, 429);
+  assert.match(JSON.parse(last.body).error, /come back a little later/);
+  assert.equal((await task({ "x-nf-client-connection-ip": "9.9.9.9" })).statusCode, 200);
+  resetForTests();
+});

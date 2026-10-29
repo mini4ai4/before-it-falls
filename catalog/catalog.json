@@ -214,5 +214,149 @@
    "highlight": "#d2d0d3",
    "samples": 2400
   }
+ },
+ {
+  "id": "w17",
+  "group": "new",
+  "name": "Natural afro, tight 4C coils, black",
+  "curl": "4b to 4c",
+  "length": "ear length",
+  "image": "catalog/w17.jpg",
+  "colour": {
+   "hex": "#1c1b20",
+   "lab": [
+    10.02,
+    2.01,
+    -3.03
+   ],
+   "highlight": "#2d2b30",
+   "samples": 2400
+  }
+ },
+ {
+  "id": "w18",
+  "group": "new",
+  "name": "Kinky curls, 4A coils, dark brown",
+  "curl": "4a",
+  "length": "above chest",
+  "image": "catalog/w18.jpg",
+  "colour": {
+   "hex": "#322728",
+   "lab": [
+    17,
+    5.21,
+    1.41
+   ],
+   "highlight": "#423535",
+   "samples": 2400
+  }
+ },
+ {
+  "id": "w19",
+  "group": "new",
+  "name": "Corkscrew curls, espresso",
+  "curl": "3c",
+  "length": "above chest",
+  "image": "catalog/w19.jpg",
+  "colour": {
+   "hex": "#211818",
+   "lab": [
+    9.51,
+    4.47,
+    1.87
+   ],
+   "highlight": "#332726",
+   "samples": 2400
+  }
+ },
+ {
+  "id": "w20",
+  "group": "new",
+  "name": "Long sleek straight, jet black",
+  "curl": "1",
+  "length": "long hair",
+  "image": "catalog/w20.jpg",
+  "colour": {
+   "hex": "#29272c",
+   "lab": [
+    16.03,
+    2.08,
+    -3
+   ],
+   "highlight": "#37353a",
+   "samples": 2400
+  }
+ },
+ {
+  "id": "w21",
+  "group": "new",
+  "name": "Pixie cut, salt and pepper",
+  "curl": "1 to 2a",
+  "length": "above the ears",
+  "image": "catalog/w21.jpg",
+  "colour": {
+   "hex": "#6f6a6e",
+   "lab": [
+    45.3,
+    2.74,
+    -1.36
+   ],
+   "highlight": "#928c8e",
+   "samples": 2400
+  }
+ },
+ {
+  "id": "w22",
+  "group": "new",
+  "name": "Chin-length bob with bangs, dark chocolate",
+  "curl": "1",
+  "length": "short hair",
+  "image": "catalog/w22.jpg",
+  "colour": {
+   "hex": "#332626",
+   "lab": [
+    16.59,
+    6.14,
+    2.2
+   ],
+   "highlight": "#413232",
+   "samples": 2400
+  }
+ },
+ {
+  "id": "w23",
+  "group": "new",
+  "name": "Long straight, light ash blonde",
+  "curl": "1",
+  "length": "long hair",
+  "image": "catalog/w23.jpg",
+  "colour": {
+   "hex": "#c3ac9f",
+   "lab": [
+    72.1,
+    5.91,
+    10.12
+   ],
+   "highlight": "#cebeaf",
+   "samples": 2400
+  }
+ },
+ {
+  "id": "w24",
+  "group": "new",
+  "name": "Short tapered coils, black with grey",
+  "curl": "4b",
+  "length": "above the ears",
+  "image": "catalog/w24.jpg",
+  "colour": {
+   "hex": "#39383d",
+   "lab": [
+    23.82,
+    1.77,
+    -3.06
+   ],
+   "highlight": "#58575c",
+   "samples": 2400
+  }
  }
 ]

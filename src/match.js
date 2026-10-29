@@ -79,3 +79,12 @@ export function matchWig(passport, wig) {
 export function rankWigs(passport, wigs) {
   return wigs.map((wig) => ({ wig, match: matchWig(passport, wig) })).sort((a, b) => b.match.total - a.match.total);
 }
+
+// "Close to you" is worked out for each person, not fixed in the catalogue: every wig that scores "Close" or
+// better (70+), and at least the top three, so someone with tight coils or a short grey crop gets their own
+// closest wigs first. Everything else is "Something new".
+export function splitByCloseness(ranked, { min = 3, threshold = 70 } = {}) {
+  const close = ranked.filter((r, i) => r.match.total >= threshold || i < min);
+  const ids = new Set(close.map((r) => r.wig.id));
+  return { close, other: ranked.filter((r) => !ids.has(r.wig.id)) };
+}

@@ -1,14 +1,142 @@
 [
- {"id": "w01", "group": "close", "name": "Soft wave, chestnut with caramel", "curl": "2a to 2b", "length": "above chest"},
- {"id": "w08", "group": "close", "name": "Layered wave, light brown", "curl": "2a to 2b", "length": "above chest"},
- {"id": "w11", "group": "close", "name": "Soft wave, cool ash brown", "curl": "2a to 2b", "length": "above chest"},
- {"id": "w12", "group": "close", "name": "Soft wave, golden chestnut", "curl": "2a to 2b", "length": "above chest"},
- {"id": "w13", "group": "close", "name": "Soft wave, deep mocha", "curl": "2a to 2b", "length": "above chest"},
- {"id": "w14", "group": "close", "name": "Soft wave, light caramel", "curl": "2a to 2b", "length": "above chest"},
- {"id": "w15", "group": "close", "name": "Soft wave, brown to caramel balayage", "curl": "2a to 2b", "length": "above chest"},
- {"id": "w16", "group": "close", "name": "Soft wave, brown with silver blend", "curl": "2a to 2b", "length": "above chest"},
- {"id": "w03", "group": "new", "name": "Side-part bob, honey blonde", "curl": "1 to 2a", "length": "short hair"},
- {"id": "w05", "group": "new", "name": "Bouncy curls, black", "curl": "3b to 3c", "length": "above chest"},
- {"id": "w06", "group": "new", "name": "Straight with bangs, auburn", "curl": "1 to 2a", "length": "above chest"},
- {"id": "w10", "group": "new", "name": "Soft-wave bob, silver", "curl": "2a to 2b", "length": "short hair"}
+ {
+  "id": "w01",
+  "group": "close",
+  "name": "Soft wave, chestnut with caramel",
+  "curl": "2a to 2b",
+  "length": "above chest"
+ },
+ {
+  "id": "w08",
+  "group": "close",
+  "name": "Layered wave, light brown",
+  "curl": "2a to 2b",
+  "length": "above chest"
+ },
+ {
+  "id": "w11",
+  "group": "close",
+  "name": "Soft wave, cool ash brown",
+  "curl": "2a to 2b",
+  "length": "above chest"
+ },
+ {
+  "id": "w12",
+  "group": "close",
+  "name": "Soft wave, golden chestnut",
+  "curl": "2a to 2b",
+  "length": "above chest"
+ },
+ {
+  "id": "w13",
+  "group": "close",
+  "name": "Soft wave, deep mocha",
+  "curl": "2a to 2b",
+  "length": "above chest"
+ },
+ {
+  "id": "w14",
+  "group": "close",
+  "name": "Soft wave, light caramel",
+  "curl": "2a to 2b",
+  "length": "above chest"
+ },
+ {
+  "id": "w15",
+  "group": "close",
+  "name": "Soft wave, brown to caramel balayage",
+  "curl": "2a to 2b",
+  "length": "above chest"
+ },
+ {
+  "id": "w16",
+  "group": "close",
+  "name": "Soft wave, brown with silver blend",
+  "curl": "2a to 2b",
+  "length": "above chest"
+ },
+ {
+  "id": "w03",
+  "group": "new",
+  "name": "Side-part bob, honey blonde",
+  "curl": "1 to 2a",
+  "length": "short hair"
+ },
+ {
+  "id": "w05",
+  "group": "new",
+  "name": "Bouncy curls, black",
+  "curl": "3b to 3c",
+  "length": "above chest"
+ },
+ {
+  "id": "w06",
+  "group": "new",
+  "name": "Straight with bangs, auburn",
+  "curl": "1 to 2a",
+  "length": "above chest"
+ },
+ {
+  "id": "w10",
+  "group": "new",
+  "name": "Soft-wave bob, silver",
+  "curl": "2a to 2b",
+  "length": "short hair"
+ },
+ {
+  "id": "w17",
+  "group": "new",
+  "name": "Natural afro, tight 4C coils, black",
+  "curl": "4b to 4c",
+  "length": "ear length"
+ },
+ {
+  "id": "w18",
+  "group": "new",
+  "name": "Kinky curls, 4A coils, dark brown",
+  "curl": "4a",
+  "length": "above chest"
+ },
+ {
+  "id": "w19",
+  "group": "new",
+  "name": "Corkscrew curls, espresso",
+  "curl": "3c",
+  "length": "above chest"
+ },
+ {
+  "id": "w20",
+  "group": "new",
+  "name": "Long sleek straight, jet black",
+  "curl": "1",
+  "length": "long hair"
+ },
+ {
+  "id": "w21",
+  "group": "new",
+  "name": "Pixie cut, salt and pepper",
+  "curl": "1 to 2a",
+  "length": "above the ears"
+ },
+ {
+  "id": "w22",
+  "group": "new",
+  "name": "Chin-length bob with bangs, dark chocolate",
+  "curl": "1",
+  "length": "short hair"
+ },
+ {
+  "id": "w23",
+  "group": "new",
+  "name": "Long straight, light ash blonde",
+  "curl": "1",
+  "length": "long hair"
+ },
+ {
+  "id": "w24",
+  "group": "new",
+  "name": "Short tapered coils, black with grey",
+  "curl": "4b",
+  "length": "above the ears"
+ }
 ]
