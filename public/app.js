@@ -420,12 +420,27 @@ function share() {
     }).join("")}</div><p class="source">These try-on photos stay on this phone and in your printout. The link only carries the measurements.</p>` : ""}
     <div class="actions">
       <button id="copy">Copy the link for my fitter</button>
+      <button id="shop" class="outline">Ask a wig shop for this</button>
       <a class="button outline" href="${link}" target="_blank" rel="noopener">See what my fitter will see</a>
       <button id="print" class="outline">Save as PDF / print</button>
       <button id="back" class="outline">Back to try on</button>
     </div>`);
   document.getElementById("copy").onclick = async (e) => {
     try { await navigator.clipboard.writeText(link); e.target.textContent = "Copied ✓"; } catch { prompt("Copy this link:", link); }
+  };
+  // The buying step: one message a person can paste into any wig shop's chat or contact form. It describes the
+  // hair the way shops list wigs (colour level and tone, curl type, length) plus the wigs they liked, by name.
+  document.getElementById("shop").onclick = async (e) => {
+    const p = state.passport;
+    const liked = state.kept.map((id) => state.catalog.find((w) => w.id === id)?.name).filter(Boolean);
+    const msg = [
+      "Hi, I'm looking for a wig that matches my own hair before treatment.",
+      `Colour: ${describeHair(p.colour.lab).name}, ${describeHair(p.colour.lab).fitter} (hex ${p.colour.hex}).`,
+      `Curl: ${p.curl.toUpperCase()}${p.curlTerm ? ` (${p.curlTerm})` : ""}. Length: ${p.length}.`,
+      liked.length ? `Styles I liked: ${liked.join("; ")}.` : "",
+      "Do you have something close? Thank you.",
+    ].filter(Boolean).join("\n");
+    try { await navigator.clipboard.writeText(msg); e.target.textContent = "Message copied ✓ paste it into the shop's chat"; } catch { prompt("Copy this message:", msg); }
   };
   document.getElementById("print").onclick = () => window.print();
   document.getElementById("back").onclick = tryOn;
