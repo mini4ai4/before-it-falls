@@ -193,3 +193,24 @@ h1.hero { font-size: 2.65rem; line-height: 1.04; margin: 0 0 10px; }
 .reel .mini.on .cap { color: var(--thread); font-weight: 700; }
 .reel .mini .kept-dot { position: absolute; top: 4px; right: 6px; width: 8px; height: 8px; border-radius: 50%; background: var(--thread); }
 @media (prefers-reduced-motion: reduce) { .stamp { animation: none; } }
+
+/* ---------- Desktop: two panes from 1024 px. Below that .split and .pane are plain blocks, so the phone layout is untouched. ---------- */
+@media (min-width: 1024px) {
+  main:has(.split) { max-width: 1120px; padding: 28px 40px 120px; }
+  .split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 56px; align-items: start; }
+  .split > .pane > :first-child { margin-top: 0; }
+  .split > .pane:first-child { position: sticky; top: 20px; }
+  .split .pane > .tag:first-child { margin-top: 30px; }
+
+  /* Welcome: the hanging mobile gets a stage of its own, the words sit beside it. */
+  .split.welcome { grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); align-items: center; }
+  .split.welcome .mobile { margin: 0; height: 420px; border-radius: 12px; zoom: 1.4; } /* the same mobile, larger: threads and tags scale together */
+  .split.welcome h1.hero { font-size: 3.3rem; }
+
+  /* Try on: the photo with the thread on the left, the whole catalogue visible on the right. */
+  .split.tryon { grid-template-columns: minmax(0, 420px) minmax(0, 1fr); }
+  .split.tryon .reel { display: grid; grid-template-columns: repeat(auto-fill, minmax(92px, 1fr)); gap: 12px; overflow: visible; margin: 0; padding: 22px 0 6px; }
+  .split.tryon .reel .mini { flex: none; }
+  .split.tryon .actions { grid-template-columns: 1fr 1fr; }
+}
+@media print { .split { display: block; } .split > .pane { position: static; } }

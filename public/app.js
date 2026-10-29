@@ -21,6 +21,9 @@ const state = {
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 const today = () => new Date().toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
 
+// Two panes: on a phone they stack exactly as before (plain blocks); from 1024 px wide they sit side by side.
+const split = (a, b, cls = "") => `<div class="split ${cls}"><div class="pane">${a}</div><div class="pane">${b}</div></div>`;
+
 function setHairColour(hex) {
   document.documentElement.style.setProperty("--hair", hex);
 }
@@ -41,10 +44,11 @@ function welcome() {
     { src: "/demo/tryon_w01.jpg", cap: "83", x: "16%", len: 150, w: 92 },
     { src: "/demo/tryon_w15.jpg", cap: "73", x: "78%", len: 26, w: 84 },
     { src: "/demo/dana_front.jpg", cap: "Today", x: "47%", len: 70, w: 138, today: true },
-  ];  screen("", `
+  ];
+  screen("", split(`
     <div class="mobile" id="mobile" aria-hidden="true">
       ${tags.map((t) => `<div class="hang" data-hang style="--x:${t.x};--len:${t.len}px;--w:${t.w}px"><div class="string"></div><div class="mini ${t.today ? "today" : ""}"><img src="${t.src}" alt=""><div class="cap">${t.cap}</div></div></div>`).join("")}
-    </div>
+    </div>`, `
     <h1 class="hero">Keep your hair as it is today.</h1>
     <p class="lede">So the wig you choose can match it, when the time comes.</p>
     <div class="actions" style="margin-top:14px">
@@ -61,7 +65,7 @@ function welcome() {
       <li>Read your colour, wave and length, and keep them on one tag.</li>
       <li>Try wigs on your own face: drag the thread to compare.</li>
       <li>Share the tag with your wig fitter, or print it.</li>
-    </ol>`);
+    </ol>`, "welcome"));
   state.unhang?.();
   state.unhang = hang(document.getElementById("mobile"));
   document.getElementById("live").onclick = () => { state.unhang?.(); state.mode = "live"; capture(); };
@@ -86,7 +90,7 @@ function capture() {
     <h1>Record your hair today.</h1>
     <div class="chips">${chips}</div>
     <p class="lede">Stand near a window if you can. Daylight shows your real colour.</p>
-    ${next ? `
+    ${split(`${next ? `
       <div class="tag"><span class="thread"></span>
         <p class="data" style="margin:0 0 6px;color:var(--ink-soft)">${esc(next[1])}</p><p class="voice" style="margin:0 0 14px">${esc(next[2])}</p>
         <div style="display:grid;gap:10px">
@@ -97,12 +101,12 @@ function capture() {
             <input type="file" accept="image/*" class="shot" hidden>
           </label>
         </div>
-      </div>` : ""}
+      </div>` : ""}`, `
     <div class="catalog" style="margin-top:16px">${SHOTS.filter(([k]) => state.photos[k]).map(([k, label]) => `<figure style="cursor:default"><img src="${state.photos[k].url}" alt="${esc(label)}"><figcaption style="display:flex;justify-content:space-between;align-items:center;gap:4px">${esc(label)}<button class="chip" data-retake="${k}" style="width:auto;min-height:0;padding:3px 8px">Retake</button></figcaption></figure>`).join("")}</div>
     <div class="actions">
       ${ready ? `<button id="next">Next: show us your colour</button>` : ""}
       <button id="back" class="outline">Back</button>
-    </div>`);
+    </div>`)}`);
   // One input opens the camera; the other (no capture attribute) opens the photo library.
   app.querySelectorAll("input.shot").forEach((input) => {
     input.onchange = async () => {
@@ -140,11 +144,11 @@ function tap() {
   screen("Step 2 of 4", `
     <h1>Show us your colour.</h1>
     <p class="lede voice">Tap three or four places on your hair, spread across the lengths: not the roots, not the shine.</p>
-    <div class="photo" id="tapzone"><canvas id="c" width="768" height="1024"></canvas><span class="badge" id="count">0 taps</span></div>
+    ${split(`<div class="photo" id="tapzone"><canvas id="c" width="768" height="1024"></canvas><span class="badge" id="count">0 taps</span></div>`, `
     <div class="actions">
       <button id="read" disabled>Read my hair</button>
       <button id="redo" class="outline">Start the taps again</button>
-    </div>`);
+    </div>`)}`);
   const canvas = document.getElementById("c");
   const ctx = canvas.getContext("2d", { willReadFrequently: true });
   const img = new Image();
@@ -271,14 +275,14 @@ function passport() {
   screen("Step 3 of 4", `
     <h1>Your hair, kept.</h1>
     <p class="lede">This is what a fitter needs to match you. It stays with you.</p>
-    ${passportTag(state.passport, { editable: true })}
+    ${split(passportTag(state.passport, { editable: true }), `
     <details class="notice" style="margin-top:16px"><summary>How we read your colour</summary>
       <p>We read your colour ourselves from the strands you tapped: the middle of the lengths, ignoring shine and shadow, with lighter strands kept separate. A single number from a photo can drift warm or cool with the light, so we also print the words a fitter uses, and the ACS still suggests keeping a real lock of hair from the front of your head.</p>
     </details>
     <div class="actions">
       <button id="try">Try on wigs</button>
       <button id="share" class="outline">Share with my fitter</button>
-    </div>`);
+    </div>`)}`);
   document.getElementById("note").oninput = (e) => { state.passport.note = e.target.value.slice(0, 160); };
   document.getElementById("try").onclick = tryOn;
   document.getElementById("share").onclick = share;
@@ -289,8 +293,14 @@ const thumb = (url) => (/^\/(catalog|demo)\/[^/]+\.jpg$/.test(url) ? url.replace
 
 // ---------- 6. Try on: drag the red thread across your face ----------
 function tryOn() {
-  const split = splitByCloseness(rankWigs(state.passport, state.catalog));
-  const ranked = state.filter === "close" ? split.close : split.other;
+  const groups = splitByCloseness(rankWigs(state.passport, state.catalog));
+  // The example opens on its lead wig (one that clearly changes her), wherever it ranks, so the split sells itself.
+  if (state.lead) {
+    state.filter = groups.close.some((r) => r.wig.id === state.lead) ? "close" : "new";
+    state.current = state.lead;
+    state.lead = null;
+  }
+  const ranked = state.filter === "close" ? groups.close : groups.other;
   if (!ranked.some((r) => r.wig.id === state.current)) state.current = ranked[0]?.wig.id;
   const { wig, match } = ranked.find((r) => r.wig.id === state.current);
   // The example's try-ons are already real YouCam results, so it opens straight onto the thread.
@@ -303,7 +313,7 @@ function tryOn() {
       <button class="chip ${state.filter === "close" ? "on" : ""}" data-f="close" style="width:auto;min-height:0">Close to you</button>
       <button class="chip ${state.filter === "new" ? "on" : ""}" data-f="new" style="width:auto;min-height:0">Something new</button>
     </div>
-    <div class="tag" style="padding:30px 12px 14px"><span class="thread"></span>
+    ${split(`<div class="tag" style="padding:30px 12px 14px"><span class="thread"></span>
       ${done ? `<div class="stamp"><b>${match.total}</b><small>${esc(match.verdict)}</small></div>` : ""}
       <div class="compare" id="cmp">
         <img src="${state.photos.front.url}" alt="Your hair today">
@@ -315,7 +325,7 @@ function tryOn() {
       <div class="duo"><span style="background:${esc(state.passport.colour.hex)}">your colour</span><span style="background:${esc(wig.colour.hex)}">this wig</span></div>
       <p class="source" style="margin:2px 0 0">${esc(match.reasons.join(" · "))}</p>
       ${done ? `<div class="actions" style="margin-top:14px"><button id="keep" class="${kept ? "" : "outline"}">${kept ? "Kept for my fitter ✓" : "Keep for my fitter"}</button></div>` : ""}
-    </div>
+    </div>`, `
     <div class="reel" id="reel">${ranked.map(({ wig: w, match: m }) => `
       <div class="mini ${w.id === state.current ? "on" : ""}" data-pick="${w.id}">${state.kept.includes(w.id) ? `<span class="kept-dot"></span>` : ""}
         <img src="${thumb(state.tryons[w.id] || "/" + w.image)}" alt="${esc(w.name)}" loading="lazy" decoding="async"><div class="cap">${m.total}</div></div>`).join("")}
@@ -326,7 +336,7 @@ function tryOn() {
     <div class="actions">
       <button id="share">${state.kept.length ? `Share my ${state.kept.length} favourite${state.kept.length > 1 ? "s" : ""} with my fitter` : "Share my tag with my fitter"}</button>
       <button id="back" class="outline">Back to my tag</button>
-    </div>`);
+    </div>`, "tryon")}`);
   app.querySelectorAll("[data-f]").forEach((b) => { b.onclick = () => { state.filter = b.dataset.f; state.current = null; tryOn(); }; });
   app.querySelectorAll("[data-pick]").forEach((t) => { t.onclick = () => { state.current = t.dataset.pick; tryOn(); }; });
   document.getElementById("tryit")?.addEventListener("click", (e) => runTryOn(wig.id, e.currentTarget));
@@ -412,8 +422,7 @@ function share() {
   screen("Share", `
     <h1>For your wig fitter.</h1>
     <p class="lede">Your fitter sees your tag and your favourites. Your photos stay on this phone: the link carries only the measurements and your note.</p>
-    ${passportTag(state.passport)}
-    ${state.kept.length ? `<h2>The wigs I liked</h2><div class="catalog">${state.kept.map((id) => {
+    ${split(passportTag(state.passport), `${state.kept.length ? `<h2>The wigs I liked</h2><div class="catalog">${state.kept.map((id) => {
       const wig = state.catalog.find((w) => w.id === id);
       const m = rankWigs(state.passport, [wig])[0].match;
       return `<figure style="cursor:default"><img src="${state.tryons[id] || "/" + wig.image}" alt="${esc(wig.name)} tried on"><figcaption>${esc(wig.name)}<br><b>${m.total}</b> · ${esc(m.verdict.toLowerCase())}</figcaption></figure>`;
@@ -424,7 +433,7 @@ function share() {
       <a class="button outline" href="${link}" target="_blank" rel="noopener">See what my fitter will see</a>
       <button id="print" class="outline">Save as PDF / print</button>
       <button id="back" class="outline">Back to try on</button>
-    </div>`);
+    </div>`)}`);
   document.getElementById("copy").onclick = async (e) => {
     try { await navigator.clipboard.writeText(link); e.target.textContent = "Copied ✓"; } catch { prompt("Copy this link:", link); }
   };
@@ -451,6 +460,7 @@ async function loadDemo() {
   state.mode = "demo";
   const demo = await (await fetch("/demo/dana.json")).json();
   state.demo = demo;
+  state.lead = demo.lead;
   for (const k of ["front", "left", "right"]) state.photos[k] = { url: `/demo/dana_${k}.jpg` };
   state.passport = { ...demo.passport, date: today() };
   state.passport.colour.highlight.lab ??= rgbToLab(hexToRgb(state.passport.colour.highlight.hex));
